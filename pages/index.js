@@ -5,21 +5,25 @@ import { Divider, Header } from "semantic-ui-react";
 import ItemList from "../src/component/ItemList";
 import styles from "../styles/Home.module.css";
 
-export default function Home() {
+
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  gql
+} from "@apollo/client";
+
+export default function Home({launches}) {
+  
+  let data = JSON.parse(launches)
+  
+  console.log(typeof(data))
+  console.log("data : "+data)
+  
   const [list, setList] = useState([]);
 
-  const API_URL =
-    "http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline";
-
-  function getData() {
-    Axios.get(API_URL).then((res) => {
-      console.log(res.data);
-      setList(res.data);
-    });
-  }
-
   useEffect(() => {
-    getData();
   }, []);
 
   return (
@@ -27,18 +31,36 @@ export default function Home() {
       <Head>
         <title>HOME | 코딩앙마</title>
       </Head>
-      <Header as="h3" style={{ paddingTop: 40 }}>
-        베스트 상품
-      </Header>
-      <Divider />
-      <ItemList list={list.slice(0, 9)} />
-      <Header as="h3" style={{ paddingTop: 40 }}>
-        신상품
-      </Header>
-      <Divider />
-      <ItemList list={list.slice(9)} />
     </div>
   );
 }
 
 // axios
+const Query = gql`
+query{
+  modelQuery(Query : "find", Collection : "Company", Data : {CEON : "변무영"})
+  {
+    CEON
+  }
+}
+`
+
+export async function getStaticProps(context) {
+  
+  const client = new ApolloClient({
+    uri : 'http://localhost:4000',
+    cache : new InMemoryCache()
+  })
+  
+  const {data} = await client.query({
+    query : Query
+  }) 
+  
+  
+  return {
+    
+    props : {
+      launches : JSON.stringify(data.modelQuery)
+    }
+  }
+} 
