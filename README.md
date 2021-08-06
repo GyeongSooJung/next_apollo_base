@@ -5,7 +5,7 @@
  - 08.06 클라이언트 graphql axios
   async function graphqlHandler() { //클라이언트에서 보내는 graphql
     Axios({
-      url: 'http://3.6.177.242:4000',
+      url: process.env.NEXT_PUBLIC_IP,
       method: 'post',
       data: {
         query: `
