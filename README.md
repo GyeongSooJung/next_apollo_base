@@ -1,6 +1,7 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## NEXT.js , Apollo 기반의 앱 구축을 위한 기본 베이스
+
+ - 08.07 소켓기능 추가
 
 First, run the development server:
 
