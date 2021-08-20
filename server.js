@@ -32,7 +32,7 @@ const app = next({dev});
 const handle = app.getRequestHandler();
 
 const socketapp = require('express')()
-const socketserver = require('http').createServer(app)
+const socketserver = require('http').createServer(socketapp)
 const cors = require('cors')
 
 socketapp.use(cors());
